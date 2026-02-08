@@ -2,9 +2,18 @@
 import { GoogleGenAI } from "@google/genai";
 import { HOTEL_INFO } from "../constants";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY || '';
+let ai: GoogleGenAI | null = null;
+try {
+  if (apiKey) {
+    ai = new GoogleGenAI({ apiKey });
+  }
+} catch (e) {
+  console.warn("Failed to initialize GoogleGenAI:", e);
+}
 
 export const getConciergeResponse = async (userMessage: string, history: { role: 'user' | 'model', text: string }[]) => {
+  if (!ai) return "I'm sorry, the concierge service is currently unavailable. Please call us directly for assistance.";
   const model = ai.models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: [
@@ -29,6 +38,7 @@ export const getConciergeResponse = async (userMessage: string, history: { role:
 };
 
 export const searchPhuQuocInfo = async (query: string) => {
+  if (!ai) return { text: "Search is currently unavailable.", links: [] };
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
@@ -57,6 +67,7 @@ export const searchPhuQuocInfo = async (query: string) => {
 };
 
 export const generateHotelFrontView = async () => {
+  if (!ai) return null;
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image',
