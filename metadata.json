@@ -1,0 +1,7 @@
+{
+  "name": "Phu Quoc Stars Hotel",
+  "description": "A high-end hotel website featuring room browsing, direct booking simulation, and an integrated AI Concierge powered by Gemini.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
