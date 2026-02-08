@@ -2,7 +2,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { HOTEL_INFO } from "../constants";
 
-const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY || '';
+const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY || process.env.API_KEY || process.env.GEMINI_API_KEY || '';
 let ai: GoogleGenAI | null = null;
 try {
   if (apiKey) {
