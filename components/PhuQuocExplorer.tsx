@@ -1,4 +1,6 @@
 
+"use client"
+
 import React, { useState } from 'react';
 import { searchPhuQuocInfo } from '../services/geminiService';
 import { Language } from '../types';
